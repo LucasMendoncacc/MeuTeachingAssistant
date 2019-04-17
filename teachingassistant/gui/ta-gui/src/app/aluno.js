@@ -8,22 +8,27 @@ class Aluno {
         this.nome = "";
         this.cpf = "";
         this.email = "";
+        this.login = "";
         this.metas = new Map();
     }
     clone() {
         var aluno = new Aluno();
-        aluno.nome = this.nome;
-        aluno.cpf = this.cpf;
-        aluno.email = this.email;
-        aluno.metas = this.cloneMetas();
+        aluno.metas = new Map();
+        aluno.copyFrom(this);
         return aluno;
     }
-    cloneMetas() {
-        var metas = new Map();
-        for (let key in this.metas) {
-            metas[key] = this.metas[key];
+    copyFrom(from) {
+        this.nome = from.nome;
+        this.cpf = from.cpf;
+        this.email = from.email;
+        this.login = from.login;
+        this.copyMetasFrom(from.metas);
+    }
+    copyMetasFrom(from) {
+        this.metas = new Map();
+        for (let key in from) {
+            this.metas[key] = from[key];
         }
-        return metas;
     }
 }
 exports.Aluno = Aluno;

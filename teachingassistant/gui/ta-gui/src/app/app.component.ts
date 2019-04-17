@@ -14,19 +14,19 @@ export class AppComponent {
 
    aluno: Aluno = new Aluno();
    alunos: Aluno[] = [];
-   cpfduplicado: boolean = false;
+   cpfLoginduplicado: boolean = false;
 
    criarAluno(a: Aluno): void {
      if (this.alunoService.criar(a)) {
        this.alunos.push(a);
        this.aluno = new Aluno();
      } else {
-       this.cpfduplicado = true;
+       this.cpfLoginduplicado = true;
      }
    }
 
    onMove(): void {
-      this.cpfduplicado = false;
+      this.cpfLoginduplicado = false;
    }
 
 }
