@@ -25,6 +25,12 @@ export class AppComponent {
      }
    }
 
+   removerAluno(a: Aluno):void{
+      if(this.alunoService.remover(a)){
+        this.alunos = this.alunos.filter(b=>b.cpf != a.cpf);
+        this.aluno = new Aluno();
+      }                                     
+   }
    onMove(): void {
       this.cpfLoginduplicado = false;
    }

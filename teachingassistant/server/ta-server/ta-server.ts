@@ -41,7 +41,15 @@ app.put('/aluno', function (req: express.Request, res: express.Response) {
     res.send({"failure": "O aluno não pode ser atualizado"});
   }
 })
-
+app.delete('/aluno',function(req: express.Request, res: express.Response){
+  var aluno = req.body;
+  var removido = cadastro.remover(aluno); //deveria haver um teste de remoção
+  if (removido) {
+    res.send({"success": "O aluno foi atualizado com sucesso"});
+  } else {
+    res.send({"failure": "O aluno não pode ser atualizado"});
+  }
+});
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })

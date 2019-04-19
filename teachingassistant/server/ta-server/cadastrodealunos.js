@@ -14,6 +14,10 @@ class CadastroDeAlunos {
         }
         return result;
     }
+    remover(aluno) {
+        this.alunos = this.alunos.filter(a => a.cpf != aluno.cpf);
+        return true;
+    }
     cpfLoginNaoCadastrado(cpf, login) {
         if (this.alunos.find(a => a.cpf == cpf) || this.alunos.find(b => b.login == login)) {
             return false;

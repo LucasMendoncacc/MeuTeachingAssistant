@@ -13,11 +13,16 @@ export class CadastroDeAlunos {
     return result;
   }
 
+  remover(aluno:Aluno): boolean {
+      this.alunos = this.alunos.filter(a => a.cpf != aluno.cpf);
+      return true;
+  }
+
   cpfLoginNaoCadastrado(cpf: string, login: string): boolean {
     if(this.alunos.find(a => a.cpf == cpf) || this.alunos.find(b => b.login == login)){
-      return false
+      return false;
     }else{
-      return true
+      return true;
     }
   }
 
