@@ -22,7 +22,7 @@ export class AlunoService {
   }
 
   remover(aluno:Aluno): Promise<Aluno>{
-    return this.http.delete(this.taURL + "/aluno",JSON.stringify(aluno))
+    return this.http.delete(this.taURL + "/aluno", {headers: this.headers, body: JSON.stringify(aluno)})
     .toPromise()
     .then(res => {
       if (res.json().success) {return aluno;} else {return null;}
