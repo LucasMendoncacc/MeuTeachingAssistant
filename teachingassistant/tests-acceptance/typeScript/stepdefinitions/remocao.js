@@ -17,29 +17,29 @@ let sameCPF = ((elem, cpf) => elem.element(protractor_1.by.name('cpflist')).getT
 let sameName = ((elem, name) => elem.element(protractor_1.by.name('nomelist')).getText().then(text => text === name));
 let pAND = ((p, q) => p.then(a => q.then(b => a && b)));
 cucumber_1.defineSupportCode(function ({ Given, When, Then }) {
-    Given(/^I am at the students page$/, () => __awaiter(this, void 0, void 0, function* () {
+    Given(/^eu estou na pagina de Aluno$/, () => __awaiter(this, void 0, void 0, function* () {
         yield protractor_1.browser.get("http://localhost:4200/");
         yield expect(protractor_1.browser.getTitle()).to.eventually.equal('TaGui');
         yield protractor_1.$("a[name='alunos']").click();
     }));
-    Given(/^I cannot see a student with CPF "(\d*)" in the students list$/, (cpf) => __awaiter(this, void 0, void 0, function* () {
+    Given(/^vejo o aluno "([^\"]*)" com o CPF "(\d*)" na lista de alunos$/, (nome, cpf) => __awaiter(this, void 0, void 0, function* () {
+        //ADICIONANDO ALUNO nome COM O CPF cpf
+        yield protractor_1.$("input[name='namebox']").sendKeys(nome);
+        yield protractor_1.$("input[name='cpfbox']").sendKeys(cpf);
+        yield protractor_1.element(protractor_1.by.buttonText('Adicionar')).click();
         var allcpfs = protractor_1.element.all(protractor_1.by.name('cpflist'));
         yield allcpfs;
         var samecpfs = allcpfs.filter(elem => elem.getText().then(text => text === cpf));
         yield samecpfs;
-        yield samecpfs.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(0));
+        yield samecpfs.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
     }));
-    When(/^I try to register the student "([^\"]*)" with CPF "(\d*)"$/, (name, cpf) => __awaiter(this, void 0, void 0, function* () {
-        yield protractor_1.$("input[name='namebox']").sendKeys(name);
-        yield protractor_1.$("input[name='cpfbox']").sendKeys(cpf);
-        yield protractor_1.element(protractor_1.by.buttonText('Adicionar')).click();
-    }));
-    Then(/^I can see "([^\"]*)" with CPF "(\d*)" in the students list$/, (name, cpf) => __awaiter(this, void 0, void 0, function* () {
-        var allalunos = protractor_1.element.all(protractor_1.by.name('alunolist'));
-        allalunos.filter(elem => pAND(sameCPF(elem, cpf), sameName(elem, name))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
-        //REMOVENDO ALUNO
-        yield protractor_1.$("input[name='namebox']").sendKeys(name);
+    When(/^eu tento remover o aluno "([^\"]*)" com o CPF "(\d*)"$/, (nome, cpf) => __awaiter(this, void 0, void 0, function* () {
+        yield protractor_1.$("input[name='namebox']").sendKeys(nome);
         yield protractor_1.$("input[name='cpfbox']").sendKeys(cpf);
         yield protractor_1.element(protractor_1.by.buttonText('Remover')).click();
+    }));
+    Then(/^eu não vejo mais o aluno "([^\"]*)" com CPF "(\d*)" na lista de alunos$/, (nome, cpf) => __awaiter(this, void 0, void 0, function* () {
+        var allalunos = protractor_1.element.all(protractor_1.by.name('alunolist'));
+        allalunos.filter(elem => pAND(sameCPF(elem, cpf), sameName(elem, nome))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(0));
     }));
 });
