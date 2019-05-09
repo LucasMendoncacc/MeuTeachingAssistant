@@ -50,8 +50,12 @@ app.delete('/aluno',function(req: express.Request, res: express.Response){
     res.send({"failure": "O aluno não pode ser atualizado"});
   }
 });
-app.listen(3000, function () {
+var server = app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
 
-export { app }
+function closeServer(): void {
+  server.close();
+}
+
+export { app, server, closeServer }
